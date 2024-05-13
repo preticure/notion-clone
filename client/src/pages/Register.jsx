@@ -8,6 +8,7 @@ const Register = () => {
   const [usernameErrText, setUsernameErrText] = useState("");
   const [passwordErrText, setPasswordErrText] = useState("");
   const [confirmPasswordErrText, setConfirmPasswordErrText] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -45,6 +46,8 @@ const Register = () => {
 
     if (error) return;
 
+    setLoading(true);
+
     //RegisterAPIを叩く
     try {
       const res = await authApi.register({
@@ -52,6 +55,7 @@ const Register = () => {
         password,
         confirmPassword,
       });
+      setLoading(false);
       localStorage.setItem("token", res.token);
       console.log("新規登録に成功しました");
     } catch (err) {
@@ -68,6 +72,7 @@ const Register = () => {
           setConfirmPasswordErrText(errors.msg);
         }
       });
+      setLoading(false);
     }
   };
   return (
@@ -82,6 +87,7 @@ const Register = () => {
           required
           helperText={usernameErrText}
           error={usernameErrText !== ""}
+          disabled={loading}
         />
         <TextField
           fullWidth
@@ -93,6 +99,7 @@ const Register = () => {
           required
           helperText={passwordErrText}
           error={passwordErrText !== ""}
+          disabled={loading}
         />
         <TextField
           fullWidth
@@ -104,12 +111,13 @@ const Register = () => {
           required
           helperText={confirmPasswordErrText}
           error={confirmPasswordErrText !== ""}
+          disabled={loading}
         />
         <LoadingButton
           sx={{ mt: 3, mb: 2 }}
           fullWidth
           type="submit"
-          loading={false}
+          loading={loading}
           color="primary"
           variant="outlined"
         >
