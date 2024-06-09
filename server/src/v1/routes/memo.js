@@ -8,4 +8,6 @@ router.get("/", tokenHandler.verifyToken, memoController.getAll);
 
 router.get("/:memoId", tokenHandler.verifyToken, memoController.getOne);
 
+router.put("/:memoId", tokenHandler.verifyToken, memoController.update);
+
 module.exports = router;
