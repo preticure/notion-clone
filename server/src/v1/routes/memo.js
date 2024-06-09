@@ -10,4 +10,6 @@ router.get("/:memoId", tokenHandler.verifyToken, memoController.getOne);
 
 router.put("/:memoId", tokenHandler.verifyToken, memoController.update);
 
+router.delete("/:memoId", tokenHandler.verifyToken, memoController.delete);
+
 module.exports = router;
